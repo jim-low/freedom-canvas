@@ -100,8 +100,6 @@ function playFirework(endPos) {
   const count = 100
   const angle = Math.PI * 2 / count
   for (let i = 0; i < count; ++i) {
-    console.log(Math.cos(angle * i) * force * Math.random())
-    console.log(Math.sin(angle * i) * force * Math.random())
     particles.push(new Particle(endPos.x, endPos.y, {
       x: Math.cos(angle * i) * force * Math.random(),
       y: Math.sin(angle * i) * force * Math.random()
