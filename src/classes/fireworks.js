@@ -13,7 +13,7 @@ class Trail {
     this.end = end
 
     const angle = Math.atan2(this.end.y - this.start.y, this.end.x - this.start.x)
-    const speed = 15
+    const speed = 20
     this.velocity = {
       x: Math.cos(angle) * speed,
       y: Math.sin(angle) * speed,
