@@ -1,3 +1,5 @@
+import { isMobile } from "../utils/index.js";
+
 export default class Freedom {
   constructor(ctx, nextAnimation) {
     this.ctx = ctx;
@@ -28,8 +30,10 @@ export default class Freedom {
 
     this.settings = {
       scale: 0,
-      scaleRate: 0.01,
-      maxScale: 2.6,
+      scaleRateDesktop: 0.01,
+      scaleRateMobile: 0.01 * 0.345,
+      maxScaleDesktop: 2.6,
+      maxScaleMobile: 1.2,
       isAnimationEnd: false,
       isAnimationStarted: false,
     };
@@ -51,7 +55,7 @@ export default class Freedom {
   }
 
   update() {
-    const { isAnimationStarted, isAnimationEnd, scale, scaleRate, maxScale } = this.settings;
+    const { isAnimationStarted, isAnimationEnd, scale } = this.settings;
 
     if (!isAnimationStarted) {
       return;
@@ -63,11 +67,14 @@ export default class Freedom {
       return;
     }
 
+    const { maxScaleMobile, maxScaleDesktop, scaleRateMobile, scaleRateDesktop } = this.settings;
+    const maxScale = isMobile() ? maxScaleMobile : maxScaleDesktop;
     if (scale >= maxScale) {
       this.settings.isAnimationEnd = true;
       return;
     }
 
+    const scaleRate = isMobile() ? scaleRateMobile : scaleRateDesktop;
     this.settings.scale += scaleRate;
   }
 

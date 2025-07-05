@@ -1,11 +1,13 @@
 import { ctx } from "../index.js"
+import { isMobile } from "../utils/index.js"
 
-const GRAVITY = 0.3
 const FRICTION = 0.98
-const MAX_FORCE = 20
-const MIN_FORCE = 12
 
-let force = 0
+const MAX_FORCE = 20
+const MIN_FORCE = 10
+let force = isMobile() ? MIN_FORCE : MAX_FORCE;
+
+const GRAVITY = isMobile() ? 0.1 : 0.3;
 
 class Trail {
   constructor(start, end) {
@@ -13,7 +15,7 @@ class Trail {
     this.end = end
 
     const angle = Math.atan2(this.end.y - this.start.y, this.end.x - this.start.x)
-    const speed = 20
+    const speed = isMobile() ? 6 : 20;
     this.velocity = {
       x: Math.cos(angle) * speed,
       y: Math.sin(angle) * speed,
@@ -24,7 +26,7 @@ class Trail {
 
   draw(lastPos) {
     ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`
-    ctx.lineWidth = 5
+    ctx.lineWidth = isMobile() ? 2 : 5;
 
     ctx.beginPath()
     ctx.moveTo(lastPos.x, lastPos.y)
@@ -135,17 +137,3 @@ export function animateFireworks() {
     }
   });
 }
-
-function calcForce() {
-  force = window.innerWidth / 40
-
-  if (force > MAX_FORCE) {
-    force = MAX_FORCE
-  }
-
-  if (force < MIN_FORCE) {
-    force = MIN_FORCE
-  }
-}
-
-calcForce();

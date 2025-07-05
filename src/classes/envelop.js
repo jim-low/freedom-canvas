@@ -1,4 +1,5 @@
 import mouse from "../mouse.js";
+import { isMobile } from "../utils/index.js";
 
 export default class Envelop {
   constructor(ctx, nextAnimation) {
@@ -29,16 +30,26 @@ export default class Envelop {
     this.settings = {
       shrinkSpeed: 2.5,
       isAnimationEnd: false,
+      desktopScale: 1,
+      mobileScale: 0.8,
     };
   }
 
   draw() {
-    if (!this.imageInfo.isLoaded) return;
+    if (!this.imageInfo.isLoaded) {
+      return;
+    }
 
-    const { width, height } = this.imageInfo;
+    const { desktopScale, mobileScale } = this.settings;
+    const scale = isMobile() ? mobileScale : desktopScale;
+
+    const { width, height } = {
+      width: this.imageInfo.width * scale,
+      height: this.imageInfo.height * scale,
+    };
     const { x, y } = {
-      x: window.innerWidth / 2 - (this.imageInfo.width / 2),
-      y: window.innerHeight / 2 - (this.imageInfo.height / 2),
+      x: window.innerWidth / 2 - (width / 2),
+      y: window.innerHeight / 2 - (height / 2),
     };
     this.ctx.drawImage(this.image, x, y, width, height);
   }

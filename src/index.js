@@ -2,12 +2,15 @@ import Freedom from './classes/freedom.js';
 import Envelop from './classes/envelop.js';
 import TypingText from './classes/typing-text.js';
 import { animateFireworks, spawnTrail } from './classes/fireworks.js';
+import { isMobile, onlyOpenOnDesktopDevice } from './utils/index.js';
 
 export const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+const MIN_SCREEN_WIDTH = 500;
 
 const freedom = new Freedom(ctx, () => {
   setInterval(() => {
@@ -46,7 +49,14 @@ window.addEventListener('click', () => {
 })
 
 function animate() {
+  requestAnimationFrame(animate);
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (isMobile() && canvas.width <= MIN_SCREEN_WIDTH) {
+    onlyOpenOnDesktopDevice(ctx);
+    return;
+  }
 
   envelop.draw();
   envelop.update();
@@ -60,7 +70,6 @@ function animate() {
 
   animateFireworks();
 
-  requestAnimationFrame(animate);
 }
 
 animate();
