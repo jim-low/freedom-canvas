@@ -2,7 +2,7 @@ import Freedom from './classes/freedom.js';
 import Envelop from './classes/envelop.js';
 import TypingText from './classes/typing-text.js';
 import { animateFireworks, spawnTrail } from './classes/fireworks.js';
-import { isMobile, onlyOpenOnDesktopDevice } from './utils/index.js';
+import { isMobile, displayNotice, isPortrait } from './utils/index.js';
 
 export const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
@@ -53,8 +53,16 @@ function animate() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (isMobile() && canvas.width <= MIN_SCREEN_WIDTH) {
-    onlyOpenOnDesktopDevice(ctx);
+  const mobile = isMobile();
+  const portrait = isPortrait();
+  const screenTooSmall = window.innerWidth <= MIN_SCREEN_WIDTH;
+  if (mobile && portrait) {
+    displayNotice(ctx, 'Please orient your device to landscape');
+    return;
+  }
+
+  if (mobile && !portrait && screenTooSmall) {
+    displayNotice(ctx, 'Please open in desktop device');
     return;
   }
 
