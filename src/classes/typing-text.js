@@ -11,7 +11,7 @@ export default class TypingText {
 
     this.nextAnimation = nextAnimation;
 
-    this.typingSoundEffect = new Audio('./src/assets/keyboard-typing-sound.mp3');
+    this.typingSoundEffect = new Audio('assets/keyboard-typing-sound.mp3');
     this.typingSoundEffect.loop = true;
     this.typingSoundEffect.autoplay = false;
 

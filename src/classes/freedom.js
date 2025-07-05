@@ -4,7 +4,7 @@ export default class Freedom {
     this.imageInfo = {
       width: 666,
       height: 375,
-      path: './src/assets/freedom.png',
+      path: 'assets/freedom.png',
       isLoaded: false,
     };
 
@@ -16,7 +16,7 @@ export default class Freedom {
       y: window.innerHeight / 2 - (this.imageInfo.height / 2),
     };
 
-    this.crabRaveMusic = new Audio('./src/assets/crab-rave.mp3');
+    this.crabRaveMusic = new Audio('assets/crab-rave.mp3');
     this.crabRaveMusic.loop = true;
     this.crabRaveMusic.autoplay = false;
 

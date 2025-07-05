@@ -6,7 +6,7 @@ export default class Envelop {
     this.imageInfo = {
       width: 360,
       height: 360,
-      path: './src/assets/envelop.png',
+      path: 'assets/envelop.png',
       isLoaded: false,
     };
 
